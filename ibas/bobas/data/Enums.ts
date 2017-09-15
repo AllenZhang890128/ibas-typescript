@@ -153,3 +153,10 @@ export enum emDirection {
     /** 出 */
     OUT
 }
+/** 物料类型 */
+export enum emItemType {
+    /** 物料 */
+    ITEM,
+    /** 服务 */
+    SERVICES,
+}
