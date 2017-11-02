@@ -19,7 +19,7 @@ export interface String extends DataDeclaration {
     value: string
 }
 /** 操作消息 */
-export interface OperationMessages extends DataDeclaration {
+export interface OperationMessage extends DataDeclaration {
     /** 结果标识 */
     SignID: string;
     /** 结果编码 */
@@ -32,7 +32,7 @@ export interface OperationMessages extends DataDeclaration {
     UserSign: string;
 }
 /** 操作结果 */
-export interface OperationResult extends OperationMessages {
+export interface OperationResult extends OperationMessage {
     /** 返回对象 */
     ResultObjects: any[];
     /** 操作执行信息 */
@@ -49,8 +49,8 @@ export interface OperationInformation extends DataDeclaration {
 }
 /** 查询 */
 export interface Criteria extends DataDeclaration {
-    /** 业务对象编码 */
-    BOCode: string;
+    /** 业务对象 */
+    BusinessObject: string;
     /** 查询结果数量 */
     ResultCount: number;
     /** 不加载子项 */

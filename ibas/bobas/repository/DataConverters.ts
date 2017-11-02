@@ -8,7 +8,7 @@
 
 import {
     objects, Criteria, Condition, Sort, ChildCriteria, OperationResult,
-    dates, enums, OperationMessages, FileData, OperationInformation, List,
+    dates, enums, OperationMessage, FileData, OperationInformation, List,
     emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo, ArrayList,
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType,
     DataTable, DataTableColumn, DataTableRow, KeyText, KeyValue
@@ -60,9 +60,9 @@ export abstract class DataConverter4j implements IDataConverter {
                 Contents: newData.contents,
             };
             return remote;
-        } else if (objects.instanceOf(data, OperationMessages)) {
-            let newData: OperationMessages = data;
-            let remote: ibas4j.OperationMessages = {
+        } else if (objects.instanceOf(data, OperationMessage)) {
+            let newData: OperationMessage = data;
+            let remote: ibas4j.OperationMessage = {
                 type: data.constructor.name,
                 SignID: newData.signID,
                 UserSign: newData.userSign,
@@ -87,7 +87,7 @@ export abstract class DataConverter4j implements IDataConverter {
             }
             let remote: ibas4j.Criteria = {
                 type: data.constructor.name,
-                BOCode: newData.boCode,
+                BusinessObject: newData.businessObject,
                 ResultCount: newData.result,
                 NoChilds: newData.noChilds,
                 Remarks: newData.remarks,
@@ -112,7 +112,7 @@ export abstract class DataConverter4j implements IDataConverter {
             }
             let remote: ibas4j.ChildCriteria = {
                 type: data.constructor.name,
-                BOCode: newData.boCode,
+                BusinessObject: newData.businessObject,
                 ResultCount: newData.result,
                 NoChilds: newData.noChilds,
                 Remarks: newData.remarks,
@@ -210,9 +210,9 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.tag = remote.Tag;
             newData.contents = remote.Contents;
             return newData;
-        } else if (data.type === OperationMessages.name) {
-            let remote: ibas4j.OperationMessages = data;
-            let newData: OperationMessages = new OperationMessages();
+        } else if (data.type === OperationMessage.name) {
+            let remote: ibas4j.OperationMessage = data;
+            let newData: OperationMessage = new OperationMessage();
             newData.signID = remote.SignID;
             newData.userSign = remote.UserSign;
             newData.time = dates.valueOf(remote.Time);
@@ -222,7 +222,7 @@ export abstract class DataConverter4j implements IDataConverter {
         } else if (data.type === Criteria.name) {
             let remote: ibas4j.Criteria = data;
             let newData: Criteria = new Criteria();
-            newData.boCode = remote.BOCode;
+            newData.businessObject = remote.BusinessObject;
             newData.result = remote.ResultCount;
             newData.noChilds = remote.NoChilds;
             newData.remarks = remote.Remarks;
@@ -242,7 +242,7 @@ export abstract class DataConverter4j implements IDataConverter {
         } else if (data.type === ChildCriteria.name) {
             let remote: ibas4j.ChildCriteria = data;
             let newData: ChildCriteria = new ChildCriteria();
-            newData.boCode = remote.BOCode;
+            newData.businessObject = remote.BusinessObject;
             newData.result = remote.ResultCount;
             newData.noChilds = remote.NoChilds;
             newData.remarks = remote.Remarks;

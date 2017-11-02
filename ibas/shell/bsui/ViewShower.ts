@@ -20,16 +20,12 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     constructor() {
         let that: this = this;
         // 键盘按钮按下
-        document.addEventListener("keydown", function (event: any): void {
-            if (ibas.objects.isNull(event)) {
-                return;
-            }
-            that.onKeyDown(event);
-        }, false);
-        // 哈希值变化
-        ibas.hashEventManager.registerListener({
-            hashSign: ibas.URL_HASH_SIGN_VIEWS,
-            onHashChange: (event: HashChangeEvent): void => {
+        ibas.keyboardEventManager.registerListener({
+            eventType: ibas.emKeyboardEventType.KEYDOWN,
+            onEventFired: (event: KeyboardEvent): void => {
+                if (ibas.objects.isNull(event)) {
+                    return;
+                }
                 if (!ibas.objects.isNull(that.busyDialog)) {
                     return;
                 }
@@ -37,7 +33,22 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                     return;
                 }
                 if (that.currentView.isDisplayed) {
-                    that.currentView.onHashChange(event);
+                    that.currentView.onKeyDown(event);
+                }
+            }
+        });
+        // 哈希值变化
+        ibas.hashEventManager.registerListener({
+            hashSign: ibas.URL_HASH_SIGN_VIEWS,
+            onHashChanged: (event: HashChangeEvent): void => {
+                if (!ibas.objects.isNull(that.busyDialog)) {
+                    return;
+                }
+                if (ibas.objects.isNull(that.currentView)) {
+                    return;
+                }
+                if (that.currentView.isDisplayed) {
+                    that.currentView.onHashChanged(event);
                 }
             }
         });
