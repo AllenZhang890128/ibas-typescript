@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 echo '****************************************************************************'
 echo '             compile_packages.sh                                            '
 echo '                      by niuren.zhu                                         '
@@ -11,9 +11,8 @@ echo '    4. 运行提示符运行mvn -v 检查安装是否成功。            
 echo '    5. 编译war包到release目录。                                             '
 echo '****************************************************************************'
 # 设置参数变量
-WORK_FOLDER=`pwd`
-OPNAME=`date '+%Y%m%d_%H%M%S'`
-LOGFILE=${WORK_FOLDER}/compile_packages_log_${OPNAME}.txt
+cd `dirname $0`
+WORK_FOLDER=${PWD}
 
 echo --当前工作的目录是[${WORK_FOLDER}]
 echo --清除项目缓存
@@ -25,15 +24,15 @@ mkdir -p ${WORK_FOLDER}/release/
 echo --开始编译
 if [ -e ${WORK_FOLDER}/pom.xml ]
 then
-  mvn clean package -f ${WORK_FOLDER}/pom.xml >>$LOGFILE
+  mvn -q clean package -f ${WORK_FOLDER}/pom.xml
   if [ -e ${WORK_FOLDER}/target/*.war ]
   then
-    cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release >>$LOGFILE
+    cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release
   fi
   if [ -d ${WORK_FOLDER}/target ]
   then
-    rm -rf ${WORK_FOLDER}/target >>$LOGFILE
+    rm -rf ${WORK_FOLDER}/target
   fi
 fi
 
-echo --编译完成，更多信息请查看[compile_packages_log_${OPNAME}.txt]
+echo --编译完成
